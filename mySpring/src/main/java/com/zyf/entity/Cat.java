@@ -2,7 +2,6 @@ package com.zyf.entity;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class Cat {
 	private String name;
 	private String type;

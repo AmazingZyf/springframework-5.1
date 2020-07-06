@@ -63,7 +63,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
-		//这里主要是将spring 内置的类的 beanDefinition 读取出来
+		//这里主要是向spring中添加内置的后置处理器
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		//主要是设置一些默认的环境等等 ，最重要的是 把scanner 默认的filter 添加到容器中
 		this.scanner = new ClassPathBeanDefinitionScanner(this);

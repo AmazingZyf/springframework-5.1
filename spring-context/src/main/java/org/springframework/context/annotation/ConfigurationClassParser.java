@@ -163,6 +163,7 @@ class ConfigurationClassParser {
 		for (BeanDefinitionHolder holder : configCandidates) {
 			BeanDefinition bd = holder.getBeanDefinition();
 			try {
+				//注解方式的配置类
 				if (bd instanceof AnnotatedBeanDefinition) {
 					parse(((AnnotatedBeanDefinition) bd).getMetadata(), holder.getBeanName());
 				}
@@ -239,6 +240,19 @@ class ConfigurationClassParser {
 		// Recursively process the configuration class and its superclass hierarchy.
 		SourceClass sourceClass = asSourceClass(configClass);
 		do {
+
+			/**
+			 * 这里会解析配置类 依次解析下面这些注解
+			 * 1、先 解析 componnet 注解
+			 * 2、PropertySources 注解
+			 * 3、ComponentScans 和 ComponentScan 注解
+			 * 4、import   MYBATIS 的mapperScan 为 import 注解
+			 * (mybatis 执行到这里会执行 MapperScannerRegistrar 的回调方法 ，
+			 * 这个回调方法主要是向容器中注册了一个BeanDefinitionRegistryPostProcessor 类型的后置处理器，然后接着执行beanFactory的流程)
+			 * 5、importResource
+			 * 6、bean注解
+			 */
+
 			sourceClass = doProcessConfigurationClass(configClass, sourceClass);
 		}
 		while (sourceClass != null);
